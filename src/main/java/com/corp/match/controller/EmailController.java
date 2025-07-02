@@ -19,7 +19,7 @@ public class EmailController {
 
     @Autowired
     private EmailService emailService;
-
+    //http://localhost:8080/email/send?to=singhjasmeet1004@gmail.com
     @GetMapping("/send")
     public String sendEmail(@RequestParam String to) {
         String otp = String.format("%05d", new Random().nextInt(100000)); // 5-digit OTP
@@ -30,7 +30,7 @@ public class EmailController {
 
         return "Verification OTP sent to " + to;
     }
-
+    //http://localhost:8080/email/verify?otp=40253
     @GetMapping("/verify")
     public String verifyOtp(@RequestParam String otp) {
         if (!otpStatus.containsKey(otp)) {

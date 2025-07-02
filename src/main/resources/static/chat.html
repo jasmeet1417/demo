@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WebSocket Chat</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs/lib/stomp.min.js"></script>
+</head>
+<body>
+    <h2>WebSocket Chat</h2>
+
+    <label>Enter your name: </label>
+    <input type="text" id="username" placeholder="e.g. Jasmeet" />
+    <button onclick="connect()">Join Chat</button>
+
+    <br/><br/>
+
+    <input type="text" id="message" placeholder="Type your message" />
+    <button onclick="send()">Send</button>
+
+    <ul id="messages"></ul>
+
+    <script>
+        var stompClient = null;
+        var sender = '';
+
+        function connect() {
+            sender = document.getElementById('username').value.trim();
+            if (!sender) {
+                alert("Please enter a name before joining.");
+                return;
+            }
+
+            var socket = new SockJS('/chat');
+            stompClient = Stomp.over(socket);
+
+            stompClient.connect({}, function () {
+                console.log('Connected as ' + sender);
+                stompClient.subscribe('/topic/messages', function (message) {
+                    var msg = JSON.parse(message.body);
+                    var listItem = `<li><b>${msg.sender}</b>: ${msg.content}</li>`;
+                    document.getElementById('messages').innerHTML += listItem;
+                });
+            });
+        }
+
+        function send() {
+            var msg = document.getElementById('message').value.trim();
+            if (!msg || !stompClient || !sender) return;
+
+            stompClient.send("/app/send", {}, JSON.stringify({
+                sender: sender,
+                content: msg
+            }));
+
+            document.getElementById('message').value = '';
+        }
+    </script>
+</body>
+</html>
