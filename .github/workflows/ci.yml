@@ -112,7 +112,7 @@ jobs:
   deploy-stage:
     name: 🟡 Promote to STAGE
     needs: [factory, deploy-dev]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     environment: staging
     steps:
@@ -123,7 +123,7 @@ jobs:
   deploy-prod:
     name: 🔴 Promote to PROD
     needs: [factory, deploy-stage]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     environment: production
     steps:
