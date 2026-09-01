@@ -1,0 +1,12 @@
+.git
+.github
+.mvn
+src
+*.md
+HELP.md
+mvnw
+mvnw.cmd
+pom.xml
+target/classes
+target/test-classes
+target/*.original

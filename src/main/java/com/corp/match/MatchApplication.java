@@ -7,8 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class MatchApplication {
 
 	public static void main(String[] args) {
-		System.out.println("corp match");
 		SpringApplication.run(MatchApplication.class, args);
 	}
-
 }
