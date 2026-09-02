@@ -22,7 +22,7 @@ permissions:
 
 jobs:
   detective:
-    name: 🕵️ CI — build and test
+    name: 🕵️ CI — teri maa ka bhosdaa
     runs-on: ubuntu-latest
     steps:
       - name: Checkout — show me exactly what Rahul pushed
